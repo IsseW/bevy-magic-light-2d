@@ -1,6 +1,6 @@
 use std::f64::consts::PI;
 
-use bevy::prelude::*;
+use bevy::{prelude::*, render::view::RenderLayers};
 use bevy::render::camera::RenderTarget;
 // use bevy_inspector_egui::prelude::*;
 use bevy_magic_light_2d::prelude::*;
@@ -111,26 +111,66 @@ fn setup(mut commands: Commands, post_processing_target: Res<PostProcessingTarge
         .insert(Name::new("lights"))
         .push_children(&lights);
 
-    let render_target = post_processing_target
+    let (floor_target, walls_target, objects_target) = post_processing_target
         .handles
         .clone()
-        .expect("No post processing target").0;
+        .expect("No post processing target");
 
+
+    // Setup separate camera for floor, walls and objects.
     commands
         .spawn((
             Camera2dBundle {
                 camera: Camera {
-                    hdr: true,
-                    target: RenderTarget::Image(render_target),
-                    ..Default::default()
+                    hdr: false,
+                    target: RenderTarget::Image(floor_target),
+                    ..default()
                 },
-                ..Default::default()
+                ..default()
             },
-            Name::new("main_camera"),
+            Name::new("main_camera_floor"),
         ))
+        .insert(SpriteCamera)
+        .insert(FloorCamera)
+        .insert(RenderLayers::from_layers(CAMERA_LAYER_FLOOR))
         .insert(UiCameraConfig {
             show_ui: false,
-            ..default()
+        });
+    commands
+        .spawn((
+            Camera2dBundle {
+                camera: Camera {
+                    hdr: false,
+                    target: RenderTarget::Image(walls_target),
+                    ..default()
+                },
+                ..default()
+            },
+            Name::new("main_camera_walls"),
+        ))
+        .insert(SpriteCamera)
+        .insert(WallsCamera)
+        .insert(RenderLayers::from_layers(CAMERA_LAYER_WALLS))
+        .insert(UiCameraConfig {
+            show_ui: false,
+        });
+    commands
+        .spawn((
+            Camera2dBundle {
+                camera: Camera {
+                    hdr: false,
+                    target: RenderTarget::Image(objects_target),
+                    ..default()
+                },
+                ..default()
+            },
+            Name::new("main_camera_objects"),
+        ))
+        .insert(SpriteCamera)
+        .insert(ObjectsCamera)
+        .insert(RenderLayers::from_layers(CAMERA_LAYER_OBJECTS))
+        .insert(UiCameraConfig {
+            show_ui: false,
         });
 }
 

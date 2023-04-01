@@ -1,4 +1,4 @@
-use bevy::core_pipeline::bloom::BloomSettings;
+use bevy::{core_pipeline::bloom::BloomSettings, pbr::MAX_CASCADES_PER_LIGHT, render::render_resource::ShaderDefVal};
 use bevy::prelude::*;
 use bevy::reflect::TypeUuid;
 use bevy::render::render_resource::{
@@ -45,6 +45,17 @@ pub struct PostProcessingTarget {
 impl Material2d for PostProcessingMaterial {
     fn fragment_shader() -> ShaderRef {
         "shaders/gi_post_processing.wgsl".into()
+    }
+
+    fn specialize(
+            descriptor: &mut bevy::render::render_resource::RenderPipelineDescriptor,
+            _layout: &bevy::render::mesh::MeshVertexBufferLayout,
+            _key: bevy::sprite::Material2dKey<Self>,
+        ) -> Result<(), bevy::render::render_resource::SpecializedMeshPipelineError> {
+        if let Some(ref mut fragment) = descriptor.fragment {
+            fragment.shader_defs.push(ShaderDefVal::UInt("MAX_CASCADES_PER_LIGHT".to_string(), MAX_CASCADES_PER_LIGHT as u32));
+        }
+        Ok(())
     }
 }
 

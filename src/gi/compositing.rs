@@ -1,4 +1,4 @@
-use bevy::{core_pipeline::bloom::BloomSettings};
+use bevy::core_pipeline::bloom::BloomSettings;
 use bevy::prelude::*;
 use bevy::reflect::TypeUuid;
 use bevy::render::render_resource::{

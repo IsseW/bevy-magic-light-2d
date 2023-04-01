@@ -6,9 +6,9 @@
 
 @group(0) @binding(0) var<uniform> camera_params:         CameraParams;
 @group(0) @binding(1) var<uniform> cfg:                   LightPassParams;
-@group(0) @binding(2) var<storage> probes:                ProbeDataBuffer;
-@group(0) @binding(3) var<storage> skylight_masks_buffer: SkylightMaskBuffer;
-@group(0) @binding(4) var<storage> lights_source_buffer:  LightSourceBuffer;
+@group(0) @binding(2) var<uniform> probes:                ProbeDataBuffer;
+@group(0) @binding(3) var<uniform> skylight_masks_buffer: SkylightMaskBuffer;
+@group(0) @binding(4) var<uniform> lights_source_buffer:  LightSourceBuffer;
 @group(0) @binding(5) var          sdf_in:                texture_2d<f32>;
 @group(0) @binding(6) var          sdf_in_sampler:        sampler;
 @group(0) @binding(7) var          ss_probe_out:          texture_storage_2d<rgba16float, write>;

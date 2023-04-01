@@ -1,7 +1,8 @@
 use std::f64::consts::PI;
 
-use bevy::{prelude::*, render::view::RenderLayers};
+use bevy::prelude::*;
 use bevy::render::camera::RenderTarget;
+use bevy::render::view::RenderLayers;
 // use bevy_inspector_egui::prelude::*;
 use bevy_magic_light_2d::prelude::*;
 
@@ -116,7 +117,6 @@ fn setup(mut commands: Commands, post_processing_target: Res<PostProcessingTarge
         .clone()
         .expect("No post processing target");
 
-
     // Setup separate camera for floor, walls and objects.
     commands
         .spawn((
@@ -133,9 +133,7 @@ fn setup(mut commands: Commands, post_processing_target: Res<PostProcessingTarge
         .insert(SpriteCamera)
         .insert(FloorCamera)
         .insert(RenderLayers::from_layers(CAMERA_LAYER_FLOOR))
-        .insert(UiCameraConfig {
-            show_ui: false,
-        });
+        .insert(UiCameraConfig { show_ui: false });
     commands
         .spawn((
             Camera2dBundle {
@@ -151,9 +149,7 @@ fn setup(mut commands: Commands, post_processing_target: Res<PostProcessingTarge
         .insert(SpriteCamera)
         .insert(WallsCamera)
         .insert(RenderLayers::from_layers(CAMERA_LAYER_WALLS))
-        .insert(UiCameraConfig {
-            show_ui: false,
-        });
+        .insert(UiCameraConfig { show_ui: false });
     commands
         .spawn((
             Camera2dBundle {
@@ -169,9 +165,7 @@ fn setup(mut commands: Commands, post_processing_target: Res<PostProcessingTarge
         .insert(SpriteCamera)
         .insert(ObjectsCamera)
         .insert(RenderLayers::from_layers(CAMERA_LAYER_OBJECTS))
-        .insert(UiCameraConfig {
-            show_ui: false,
-        });
+        .insert(UiCameraConfig { show_ui: false });
 }
 
 fn system_move_camera(

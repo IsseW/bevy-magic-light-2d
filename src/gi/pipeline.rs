@@ -8,8 +8,8 @@ use bevy::render::texture::ImageSampler;
 use super::constants::GI_SCREEN_PROBE_SIZE;
 use super::pipeline_assets::LightPassPipelineAssets;
 use super::types_gpu::{
-    GpuCameraParams, GpuLightOccluderBuffer, GpuLightPassParams, GpuLightSourceBuffer,
-    GpuProbeDataBuffer, GpuSkylightMaskBuffer,
+    GpuCameraParams, GpuLightPassParams, GpuOmniLightSourceArray, GpuProbeArray,
+    GpuSkylightMaskArray,
 };
 use crate::gi::resource::ComputedTargetSizes;
 
@@ -394,9 +394,9 @@ impl FromWorld for LightPassPipeline {
                         binding: 1,
                         visibility: ShaderStages::COMPUTE,
                         ty: BindingType::Buffer {
-                            ty: BufferBindingType::Storage { read_only: true },
+                            ty: BufferBindingType::Uniform,
                             has_dynamic_offset: false,
-                            min_binding_size: Some(GpuLightOccluderBuffer::min_size()),
+                            min_binding_size: None,
                         },
                         count: None,
                     },
@@ -445,9 +445,9 @@ impl FromWorld for LightPassPipeline {
                         binding: 2,
                         visibility: ShaderStages::COMPUTE,
                         ty: BindingType::Buffer {
-                            ty: BufferBindingType::Storage { read_only: true },
+                            ty: BufferBindingType::Uniform,
                             has_dynamic_offset: false,
-                            min_binding_size: Some(GpuProbeDataBuffer::min_size()),
+                            min_binding_size: Some(GpuProbeArray::min_size()),
                         },
                         count: None,
                     },
@@ -456,9 +456,9 @@ impl FromWorld for LightPassPipeline {
                         binding: 3,
                         visibility: ShaderStages::COMPUTE,
                         ty: BindingType::Buffer {
-                            ty: BufferBindingType::Storage { read_only: true },
+                            ty: BufferBindingType::Uniform,
                             has_dynamic_offset: false,
-                            min_binding_size: Some(GpuSkylightMaskBuffer::min_size()),
+                            min_binding_size: Some(GpuSkylightMaskArray::min_size()),
                         },
                         count: None,
                     },
@@ -467,9 +467,9 @@ impl FromWorld for LightPassPipeline {
                         binding: 4,
                         visibility: ShaderStages::COMPUTE,
                         ty: BindingType::Buffer {
-                            ty: BufferBindingType::Storage { read_only: true },
+                            ty: BufferBindingType::Uniform,
                             has_dynamic_offset: false,
-                            min_binding_size: Some(GpuLightSourceBuffer::min_size()),
+                            min_binding_size: Some(GpuOmniLightSourceArray::min_size()),
                         },
                         count: None,
                     },
@@ -605,9 +605,9 @@ impl FromWorld for LightPassPipeline {
                         binding: 2,
                         visibility: ShaderStages::COMPUTE,
                         ty: BindingType::Buffer {
-                            ty: BufferBindingType::Storage { read_only: true },
+                            ty: BufferBindingType::Uniform,
                             has_dynamic_offset: false,
-                            min_binding_size: Some(GpuProbeDataBuffer::min_size()),
+                            min_binding_size: Some(GpuProbeArray::min_size()),
                         },
                         count: None,
                     },
@@ -685,9 +685,9 @@ impl FromWorld for LightPassPipeline {
                         binding: 2,
                         visibility: ShaderStages::COMPUTE,
                         ty: BindingType::Buffer {
-                            ty: BufferBindingType::Storage { read_only: true },
+                            ty: BufferBindingType::Uniform,
                             has_dynamic_offset: false,
-                            min_binding_size: Some(GpuProbeDataBuffer::min_size()),
+                            min_binding_size: Some(GpuProbeArray::min_size()),
                         },
                         count: None,
                     },

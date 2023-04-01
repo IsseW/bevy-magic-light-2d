@@ -2,7 +2,7 @@
 #import bevy_magic_light_2d::gi_camera
 
 @group(0) @binding(0) var<uniform> camera_params:         CameraParams;
-@group(0) @binding(1) var<storage> light_occluder_buffer: LightOccluderBuffer;
+@group(0) @binding(1) var<uniform> light_occluder_buffer: LightOccluderBuffer;
 @group(0) @binding(2) var          sdf_out:               texture_storage_2d<r16float, read_write>;
 
 fn sdf_aabb_occluder(p: vec2<f32>, occluder_i: i32) -> f32 {

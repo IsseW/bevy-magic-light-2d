@@ -9,7 +9,8 @@ struct LightSource {
 
 struct LightSourceBuffer {
     count: u32,
-    data:  array<LightSource>,
+    dummy: vec3<f32>,
+    data:  array<LightSource, 256u>,
 }
 
 struct Quaternion {
@@ -24,16 +25,17 @@ struct LightOccluder {
 
 struct LightOccluderBuffer {
     count: u32,
-    data:  array<LightOccluder>,
+    dummy: vec3<f32>,
+    data:  array<LightOccluder, 256u>,
 }
 
 struct ProbeData {
     pose: vec2<f32>,
+    dummy: vec2<f32>,
 }
 
 struct ProbeDataBuffer {
-    count: u32,
-    data:  array<ProbeData>,
+    data:  array<ProbeData, 64u>,
 }
 
 struct LightPassParams {
@@ -60,5 +62,6 @@ struct SkylightMask {
 
 struct SkylightMaskBuffer {
     count: u32,
-    data:  array<SkylightMask>,
+    dummy: vec3<f32>,
+    data: array<SkylightMask, 256u>,
 }

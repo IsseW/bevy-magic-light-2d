@@ -106,9 +106,9 @@ fn setup(mut commands: Commands, post_processing_target: Res<PostProcessingTarge
         .push_children(&lights);
 
     let render_target = post_processing_target
-        .handle
+        .handles
         .clone()
-        .expect("No post processing target");
+        .expect("No post processing target").0;
 
     commands
         .spawn((
